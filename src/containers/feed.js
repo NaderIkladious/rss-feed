@@ -35,9 +35,13 @@ export class Feed extends React.Component {
         ) : (
           <div>
             <ul className="row list-inline">
-              {this.state.feed.map(item => (
+              {this.state.feed.map((item, i) => (
                 <li
-                  className="list-inline-item col-12 col-md-4 mr-0 mb-2 px-1"
+                  className={`list-inline-item col-12 mr-0 mb-2 px-1 ${
+                    (i + 1) % 7 === 1 || (i + 1) % 7 === 0
+                      ? "col-md-8"
+                      : "col-md-4"
+                  }`}
                   key={item.guid}
                 >
                   <ArticleCard data={item} />
