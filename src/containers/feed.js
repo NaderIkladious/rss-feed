@@ -1,13 +1,21 @@
 import React from "react";
 
 import { ArticleCard } from "../components";
+import "../styles/containers/feed.css";
 
 export class Feed extends React.Component {
   state = {
     feed: [],
-    feedDescription: {}
+    feedDescription: {},
+    limit: 7
   };
 
+  handleLoadMore = e => {
+    e.preventDefault();
+    this.setState(prevState => ({
+      limit: prevState.limit + 7
+    }));
+  };
   componentDidMount() {
     let apiKey = "9kkelzp3jtff1mq9hxw4oxf3aq4iw2i1fj38tf1a";
     let rssAPI = `https://api.rss2json.com/v1/api.json?rss_url=http://rss.cnn.com/rss/edition.rss&api_key=${apiKey}&count=100`;
@@ -27,6 +35,10 @@ export class Feed extends React.Component {
       });
   }
 
+  paginate = () => {
+    return this.state.feed.slice(0, this.state.limit);
+  };
+
   render() {
     return (
       <div className="py-5">
@@ -35,7 +47,7 @@ export class Feed extends React.Component {
         ) : (
           <div>
             <ul className="row list-inline">
-              {this.state.feed.map((item, i) => (
+              {this.paginate().map((item, i) => (
                 <li
                   className={`list-inline-item col-12 mr-0 mb-2 px-1 ${
                     (i + 1) % 7 === 1 || (i + 1) % 7 === 0
@@ -48,6 +60,18 @@ export class Feed extends React.Component {
                 </li>
               ))}
             </ul>
+
+            {this.state.limit < this.state.feed.length && (
+              <div className="load-more text-center">
+                <a
+                  href="/"
+                  className="btn btn-outline-secondary custom-btn"
+                  onClick={this.handleLoadMore}
+                >
+                  Load More
+                </a>
+              </div>
+            )}
           </div>
         )}
       </div>
