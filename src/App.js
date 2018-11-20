@@ -18,6 +18,23 @@ class App extends Component {
         <div className="container">
           <Feed />
         </div>
+        <div className="bg-dark text-center">
+          <p className="text-white mb-0 py-3">
+            Made with{" "}
+            <span role="img" aria-label="heart">
+              ❤️
+            </span>
+            ️by{" "}
+            <a
+              className="text-danger"
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://www.linkedin.com/in/naderikladious/"
+            >
+              Nader Ikladious
+            </a>
+          </p>
+        </div>
       </div>
     );
   }
