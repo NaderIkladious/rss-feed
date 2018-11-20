@@ -1,6 +1,8 @@
 import React from "react";
 
-class Feed extends React.Component {
+import { ArticleCard } from "../components";
+
+export class Feed extends React.Component {
   state = {
     feed: [],
     feedDescription: {}
@@ -27,14 +29,19 @@ class Feed extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="py-5">
         {this.state.loading ? (
           <div>Loading...</div>
         ) : (
           <div>
-            <ul>
+            <ul className="row list-inline">
               {this.state.feed.map(item => (
-                <div key={item.guid}>title: {item.title}</div>
+                <li
+                  className="list-inline-item col-12 col-md-4 mr-0 mb-2 px-1"
+                  key={item.guid}
+                >
+                  <ArticleCard data={item} />
+                </li>
               ))}
             </ul>
           </div>
@@ -43,5 +50,3 @@ class Feed extends React.Component {
     );
   }
 }
-
-export default Feed;

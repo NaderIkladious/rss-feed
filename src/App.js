@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Feed from "./containers/feed";
+import { Feed } from "./containers";
 
 import "./styles/index.css";
 
