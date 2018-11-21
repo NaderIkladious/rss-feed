@@ -1,7 +1,13 @@
 import React from "react";
 
-import { ArticleCard, FilterBar, Loading, LoadMore } from "../components";
-import { rssFeedProviders, ProvidersLinkMap } from "../core/consts";
+import {
+  ArticleCard,
+  FilterBar,
+  Loading,
+  LoadMore,
+  RSSProviders
+} from "../components";
+import { ProvidersLinkMap } from "../core/consts";
 
 import "../styles/containers/feed.css";
 
@@ -78,21 +84,10 @@ export class Feed extends React.Component {
   render() {
     return (
       <div className="py-5">
-        <ul className="list-inline">
-          {rssFeedProviders.map((provider, idx) => (
-            <li className="list-inline-item" key={idx}>
-              <a
-                href={ProvidersLinkMap[provider]}
-                onClick={e => this.handleChangeProvider(e, provider)}
-                className={`btn btn-outline-primary ${
-                  this.state.rssProvider === provider ? "active" : ""
-                }`}
-              >
-                {provider}
-              </a>
-            </li>
-          ))}
-        </ul>
+        <RSSProviders
+          selectedProvider={this.state.rssProvider}
+          handleClick={this.handleChangeProvider}
+        />
         <FilterBar
           value={this.state.filter}
           count={this.filter().length}
