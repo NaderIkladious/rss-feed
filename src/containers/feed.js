@@ -1,6 +1,6 @@
 import React from "react";
 
-import { ArticleCard, FilterBar } from "../components";
+import { ArticleCard, FilterBar, Loading } from "../components";
 import { rssFeedProviders, ProvidersLinkMap } from "../core/consts";
 
 import "../styles/containers/feed.css";
@@ -99,7 +99,7 @@ export class Feed extends React.Component {
           handleChange={this.handleFilterChange}
         />
         {this.state.loading ? (
-          <div>Loading...</div>
+          <Loading />
         ) : (
           <div>
             <h2
