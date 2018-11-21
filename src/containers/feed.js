@@ -1,10 +1,13 @@
 import React from "react";
 
-import { ArticleCard } from "../components";
+import { ArticleCard, FilterBar } from "../components";
+import { rssFeedProviders, ProvidersLinkMap } from "../core/consts";
+
 import "../styles/containers/feed.css";
 
 export class Feed extends React.Component {
   state = {
+    rssProvider: "CNN",
     feed: [],
     feedDescription: {},
     limit: 7,
@@ -18,8 +21,14 @@ export class Feed extends React.Component {
     }));
   };
   componentDidMount() {
+    this.fetchFeed();
+  }
+
+  fetchFeed = () => {
     let apiKey = "9kkelzp3jtff1mq9hxw4oxf3aq4iw2i1fj38tf1a";
-    let rssAPI = `https://api.rss2json.com/v1/api.json?rss_url=http://rss.cnn.com/rss/edition.rss&api_key=${apiKey}&count=100`;
+    let rssAPI = `https://api.rss2json.com/v1/api.json?rss_url=${
+      ProvidersLinkMap[this.state.rssProvider]
+    }&api_key=${apiKey}&count=100`;
     this.setState({
       loading: true
     });
@@ -34,7 +43,7 @@ export class Feed extends React.Component {
           loading: false
         });
       });
-  }
+  };
 
   filter = () => {
     let re = new RegExp(this.state.filter, "gi");
@@ -54,22 +63,41 @@ export class Feed extends React.Component {
     });
   };
 
+  handleChangeProvider = (e, provider) => {
+    e.preventDefault();
+    this.setState(
+      {
+        rssProvider: provider
+      },
+      () => {
+        this.fetchFeed();
+      }
+    );
+  };
+
   render() {
     return (
       <div className="py-5">
-        <div className="form-group">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Filter Feed"
-            value={this.state.filter}
-            onChange={this.handleFilterChange}
-          />
-          <small className="form-text text-muted">
-            Filter the results based on your input - {this.filter().length}{" "}
-            resutls
-          </small>
-        </div>
+        <ul className="list-inline">
+          {rssFeedProviders.map((provider, idx) => (
+            <li className="list-inline-item" key={idx}>
+              <a
+                href={ProvidersLinkMap[provider]}
+                onClick={e => this.handleChangeProvider(e, provider)}
+                className={`btn btn-outline-primary ${
+                  this.state.rssProvider === provider ? "active" : ""
+                }`}
+              >
+                {provider}
+              </a>
+            </li>
+          ))}
+        </ul>
+        <FilterBar
+          value={this.state.filter}
+          count={this.filter().length}
+          handleChange={this.handleFilterChange}
+        />
         {this.state.loading ? (
           <div>Loading...</div>
         ) : (
@@ -80,7 +108,7 @@ export class Feed extends React.Component {
                 __html:
                   this.state.feedDescription.title &&
                   this.state.feedDescription.title.replace(
-                    /cnn/i,
+                    new RegExp(this.state.rssProvider, "i"),
                     match => `<span>${match}</span>`
                   )
               }}

@@ -1,13 +1,16 @@
 import React from "react";
 
 import { ResponsiveImage } from "../components";
+import Placeholder from "../assets/images/article-placeholder.png";
+
 import "../styles/components/article-card.css";
 
 export const ArticleCard = ({ data }) => (
   <div className="article-card position-relative">
+    {console.log(Placeholder)}
     <div className="card-thumbnail">
       <ResponsiveImage
-        image={data.thumbnail || data.enclosure.link}
+        image={data.thumbnail || data.enclosure.link || Placeholder}
         height="310px"
       />
       <div className="article-text text-white position-absolute w-100 pl-3 pr-2">
