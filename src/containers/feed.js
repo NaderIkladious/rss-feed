@@ -66,7 +66,8 @@ export class Feed extends React.Component {
             onChange={this.handleFilterChange}
           />
           <small className="form-text text-muted">
-            Filter the results based on your input
+            Filter the results based on your input - {this.filter().length}{" "}
+            resutls
           </small>
         </div>
         {this.state.loading ? (
