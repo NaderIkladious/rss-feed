@@ -7,7 +7,8 @@ export class Feed extends React.Component {
   state = {
     feed: [],
     feedDescription: {},
-    limit: 7
+    limit: 7,
+    filter: ""
   };
 
   handleLoadMore = e => {
@@ -35,13 +36,39 @@ export class Feed extends React.Component {
       });
   }
 
+  filter = () => {
+    let re = new RegExp(this.state.filter, "gi");
+    return this.state.feed.filter(item => {
+      return re.test(item.title) || re.test(item.content);
+    });
+  };
+
   paginate = () => {
-    return this.state.feed.slice(0, this.state.limit);
+    return this.filter().slice(0, this.state.limit);
+  };
+
+  handleFilterChange = e => {
+    this.setState({
+      filter: e.target.value,
+      limit: 7
+    });
   };
 
   render() {
     return (
       <div className="py-5">
+        <div className="form-group">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Filter Feed"
+            value={this.state.filter}
+            onChange={this.handleFilterChange}
+          />
+          <small className="form-text text-muted">
+            Filter the results based on your input
+          </small>
+        </div>
         {this.state.loading ? (
           <div>Loading...</div>
         ) : (
