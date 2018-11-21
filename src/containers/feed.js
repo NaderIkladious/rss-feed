@@ -46,10 +46,21 @@ export class Feed extends React.Component {
           <div>Loading...</div>
         ) : (
           <div>
+            <h2
+              className="h3 mb-4 text-secondary feed-title"
+              dangerouslySetInnerHTML={{
+                __html:
+                  this.state.feedDescription.title &&
+                  this.state.feedDescription.title.replace(
+                    /cnn/i,
+                    match => `<span>${match}</span>`
+                  )
+              }}
+            />
             <ul className="row list-inline">
               {this.paginate().map((item, i) => (
                 <li
-                  className={`list-inline-item col-12 mr-0 mb-2 px-1 ${
+                  className={`list-inline-item col-12 mr-0 mb-2  ${
                     (i + 1) % 7 === 1 || (i + 1) % 7 === 0
                       ? "col-md-8"
                       : "col-md-4"

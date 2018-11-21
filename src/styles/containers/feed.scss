@@ -1,4 +1,10 @@
+@import "../bootstrap";
+
 .custom-btn {
   border-radius: 0 !important;
   border-width: 2px !important;
+}
+.feed-title span {
+  border-bottom: 2px solid $warning;
+  padding-bottom: 4px;
 }
