@@ -1,6 +1,6 @@
 import React from "react";
 
-import { ArticleCard, FilterBar, Loading } from "../components";
+import { ArticleCard, FilterBar, Loading, LoadMore } from "../components";
 import { rssFeedProviders, ProvidersLinkMap } from "../core/consts";
 
 import "../styles/containers/feed.css";
@@ -129,15 +129,7 @@ export class Feed extends React.Component {
             </ul>
 
             {this.state.limit < this.state.feed.length && (
-              <div className="load-more text-center">
-                <a
-                  href="/"
-                  className="btn btn-outline-secondary custom-btn"
-                  onClick={this.handleLoadMore}
-                >
-                  Load More
-                </a>
-              </div>
+              <LoadMore handleClick={this.handleLoadMore} />
             )}
           </div>
         )}
